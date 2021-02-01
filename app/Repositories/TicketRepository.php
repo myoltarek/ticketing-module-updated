@@ -7,18 +7,13 @@ namespace App\Repositories;
 use App\Models\Ticket;
 use Auth;
 use App\Exports\TicketsExport;
+use Illuminate\Pipeline\Pipeline;
 
 class TicketRepository implements TicketRepositoryInterface
 {
     public function all($request)
     {
-        $userID = Auth::id();
-        if(Auth::user()->isAdmin){
-            return Ticket::where('status', strtoupper($request->type))->with($this->relationship())->get();
-        }else{
-
-            return Ticket::where('user_id', $userID)->where('status', strtoupper($request->type))->with($this->relationship())->get();
-        }
+        return Ticket::allTickets();
     }
 
     public function findById($id)
@@ -67,18 +62,5 @@ class TicketRepository implements TicketRepositoryInterface
             'end_date' => $request->end_date,
             'type' => $request->type
         ]);
-    }
-
-    protected function relationship()
-    {
-        return [
-            'crm',
-            'crm.district',
-            'crm.district.division',
-            'crm.department',
-            'crm.query_type',
-            'crm.complain_type',
-            'crm.call_remark'
-        ];
     }
 }
