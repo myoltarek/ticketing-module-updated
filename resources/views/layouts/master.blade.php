@@ -243,7 +243,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="{{ route('assign-tickets.index') }}" class="nav-link {{ 'assign-tickets' == \Request::segment(1) ? 'active' : '' }}">
                   <i style="color: #D41397;" class="fas fa-people-carry nav-icon"></i>
                   <p>
-                    Assign ticket Persons
+                    Assign Ticket Persons
                   </p>
                 </a>
               </li>

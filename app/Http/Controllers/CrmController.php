@@ -35,7 +35,6 @@ class CrmController extends Controller
     }
     public function create(Request $request)
     {
-        $departments = Department::orderBy('name', 'asc')->pluck('name', 'id');
         $districts = District::orderBy('name', 'asc')->pluck('name', 'id');
         $query_types = QueryType::orderBy('name', 'asc')->pluck('name', 'id');
         $complain_types = ComplainType::orderBy('name', 'asc')->pluck('name', 'id');

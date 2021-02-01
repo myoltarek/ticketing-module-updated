@@ -41,14 +41,151 @@
             @csrf
             <input type="hidden" class="form-control" id="" placeholder="" name="agent_name" value="<?php echo $agent; ?>" required>
             <input type="hidden" class="form-control" id="" placeholder="" name="customer_contact" value="<?php echo $phoneNumber; ?>" required>
-            <div class="form-row">
-                <div class="form-group col-md-6 {{ $errors->has('name') ? 'has-error' : ''}}">
-                    <label for="Customer_name">Name</label>
-                        <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label">Customer Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label">Alternate Number</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Customer Number" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Customer Gender</label>
+                        <div class="col-sm-10">
+                            {{-- {{ Form::label('Customer Gender', array('class' => 'col-sm-2 col-form-label')) }} --}}
+                            {{ Form::select('customer_gender',['male' => 'Male', 'female' => 'Female'], null, array('class'=>'form-control', 'placeholder'=>'Please select ...', 'required')) }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">District</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Address</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Wing</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Division</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Area</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Teritory</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Region</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Designation</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="Customer_name">Alternate Number</label>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Distributor Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Proprietor Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Verification Code</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Caller Type</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Conversation Detail</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Query Type</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Department</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Raise Ticket</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Call Type</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="Customer_name" class="col-sm-2 col-form-label ">Call Remarks</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group row col-md-6">
+                    <label for="Customer_name" class="col-sm-2 col-form-label ">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="customer_name" name="customer_name" value="<?php if(isset($customer_name))echo $customer_name; ?>" placeholder="Name" required>
+                    </div>
+                </div>
+                <div class="form-group row col-md-6">
+                    <label for="Customer_name" class="col-sm-2 col-form-label ">Alternate Number</label>
+                    <div class="col-sm-10">
                         <input type="number" class="form-control" id="altername_number" name="altername_number" value="<?php if(isset($altername_number))echo $altername_number; ?>" placeholder="Altername number">
+                    </div>
                 </div>
             </div>
             <div class="form-row">

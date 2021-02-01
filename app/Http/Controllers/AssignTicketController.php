@@ -35,8 +35,6 @@ class AssignTicketController extends Controller
      */
     public function create()
     {
-        $departments = Department::all()->pluck('name', 'id');
-        $users = User::all()->pluck('name', 'id');
         return view('assign_tickets.create', get_defined_vars());
     }
 
@@ -98,8 +96,6 @@ class AssignTicketController extends Controller
      */
     public function edit(AssignTicket $assign_ticket)
     {
-        $departments = Department::all()->pluck('name', 'id');
-        $users = User::all()->pluck('name', 'id');
         return view('assign_tickets.edit', get_defined_vars());
     }
 

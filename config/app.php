@@ -171,9 +171,14 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
+        App\Providers\DepartmentsServiceProvider::class,
+        App\Providers\DivisionsServiceProvider::class,
+        App\Providers\UsersServiceProvider::class,
+        App\Providers\EscalationLevelsServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\RepositoriesServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],

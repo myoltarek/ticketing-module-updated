@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/crm/get-district', 'CrmController@getDistrict');
+// Route::get('/crm/get-district', 'CrmController@getDistrict');
 Route::get('/crm/create', 'CrmController@create');
 Route::post('/crm/store', 'CrmController@store')->name('crm.store');
 

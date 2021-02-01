@@ -24,10 +24,6 @@ class EscalationMatrixController extends Controller
 
     public function create()
     {
-        $users = User::all()->pluck('name', 'id');
-        $departments = Department::all()->pluck('name', 'id');
-        $escalation_levels = EscalationLevel::all()->pluck('name', 'id');
-
         return view('escalation_matrix.create', get_defined_vars());
     }
 
@@ -69,10 +65,6 @@ class EscalationMatrixController extends Controller
 
     public function edit(EscalationMatrix $escalation_matrix)
     {
-        $users = User::all()->pluck('name', 'id');
-        $departments = Department::all()->pluck('name', 'id');
-        $escalation_levels = EscalationLevel::all()->pluck('name', 'id');
-
         return view('escalation_matrix.edit', get_defined_vars());
     }
 

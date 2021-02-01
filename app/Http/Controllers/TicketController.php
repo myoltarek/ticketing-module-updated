@@ -2,69 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\TicketRepositoryInterface;
 use Auth;
 use Alert;
-use App\Models\Ticket;
 use Illuminate\Http\Request;
-use App\Exports\TicketsExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TicketController extends Controller
 {
 
-    public function __construct()
+    /**
+     * @var TicketRepository
+     */
+    private $ticketRepoisitory;
+
+    public function __construct(TicketRepositoryInterface $ticketRepoisitory)
     {
         $this->middleware('auth');
+        $this->ticketRepoisitory = $ticketRepoisitory;
     }
 
     public function index(Request $request)
     {
-        $userID = Auth::id();
-        if(Auth::user()->isAdmin){
-            $tickets = Ticket::where('status', strtoupper($request->type))->with(['crm','crm.query_type','crm.complain_type','crm.call_remark'])->get();
-        }else{
+        $tickets = $this->ticketRepoisitory->all($request);
 
-            $tickets = Ticket::where('user_id', $userID)->where('status', strtoupper($request->type))->with(['crm','crm.query_type','crm.complain_type','crm.call_remark'])->get();
-        }
         $status_for_display = $request->type;
         return view("tickets.index", get_defined_vars());
     }
 
     public function show($id)
     {
-        $ticket = Ticket::where('id', $id)->with(['crm','crm.district','crm.district.division','crm.department','crm.query_type','crm.complain_type','crm.call_remark'])->first();
+        $ticket = $this->ticketRepoisitory->findById($id);
         return view('tickets.show', get_defined_vars());
     }
 
     public function changeStatus(Request $request,$id)
     {
-        $ticket = Ticket::find($id);
-
-        switch ($ticket->status) {
-            case "NEW":
-                $ticket->status = "WIP";
-                if($request->comment){
-                    $ticket->comment = $request->comment;
-                }
-                break;
-            case "WIP":
-                $ticket->status = "ANSWERED";
-                if($request->comment){
-                    $ticket->comment = $request->comment;
-                }
-                break;
-            case "ANSWERED":
-                $ticket->status = "CLOSED";
-                if($request->comment){
-                    $ticket->comment = $request->comment;
-                }
-                break;
-            default:
-              $ticket->status = "WIP";
-              if($request->comment){
-                $ticket->comment = $request->comment;
-            }
-        }
+        $ticket = $this->ticketRepoisitory->changeTicketStatus($request,$id);
 
         $ticket->save();
 
@@ -82,13 +56,7 @@ class TicketController extends Controller
     public function download(Request $request)
     {
 
-        $export = new TicketsExport([
-
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
-                'type' => $request->type
-
-        ]);
+        $export = $this->ticketRepoisitory->downloadTicket($request);
 
         return Excel::download($export, 'tickets.xlsx');
     }

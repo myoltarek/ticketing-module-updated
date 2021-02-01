@@ -16,12 +16,10 @@ class DistrictController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $districts = District::with('division')->get();
-        // $patient = Patient::with('doctor')->where('doctor_id',$request->doctor_id)->where('date', date('Y-m-d'))->get();
-        logger($districts);
 
         return view('districts.index', compact('districts'));
     }
@@ -33,9 +31,7 @@ class DistrictController extends Controller
      */
     public function create()
     {
-        $divisions = Division::all()->pluck('name', 'id');
-        
-        return view('districts.create', compact('divisions'));
+        return view('districts.create');
     }
 
     /**
@@ -55,7 +51,7 @@ class DistrictController extends Controller
             'name.required' => 'The district field is required.',
             'division_id.required' => 'The Division Field is required'
         ];
-	    
+
         $validator = Validator::make($input, $rules, $messages);
         if($validator->fails()){
             Alert::error('Error', 'Something wrong!');
@@ -93,7 +89,6 @@ class DistrictController extends Controller
      */
     public function edit(District $district)
     {
-        $divisions = Division::all()->pluck('name','id');
         return view('districts.edit', get_defined_vars());
     }
 
@@ -107,7 +102,7 @@ class DistrictController extends Controller
     public function update(Request $request, $id)
     {
         $district = District::find($id);
-        
+
         $input = Input::all();
 	    $rules = [
             'name' => 'required',
@@ -117,7 +112,7 @@ class DistrictController extends Controller
             'name.required' => 'The District field is required.',
             'division_id.required' => 'The Division Field is required'
         ];
-	    
+
     	$validator = Validator::make($input, $rules, $messages);
 
         if($validator->fails()){
