@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Alert;
+use App\Http\Requests\EscalationMatrixFormValidation;
 use App\User;
 use Validator;
 use App\Models\Department;
@@ -27,36 +28,10 @@ class EscalationMatrixController extends Controller
         return view('escalation_matrix.create', get_defined_vars());
     }
 
-    public function store(Request $request)
+    public function store(EscalationMatrixFormValidation $request)
     {
-        $input = Input::all();
-	    $rules = [
-	    	'department_id' => 'required',
-	    	'escalation_level_id' => 'required',
-	    	'user_id' => 'required',
-	    	'to_or_cc' => 'required',
-	    ];
-	    $messages = [
-            'department_id.required' => 'The Department is required',
-            'escalation_level_id.required' => 'The Escalation Level is required',
-            'user_id.required' => 'The assign to field is required',
-            'to_or_cc.required' => 'This field is required',
-        ];
-
-        $validator = Validator::make($input, $rules, $messages);
-        if($validator->fails()){
-            Alert::error('Error', 'Something wrong!');
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
-        }
-
         $escalation_matrix = new EscalationMatrix;
-        $escalation_matrix->escalation_level_id = $request['escalation_level_id'];
-        $escalation_matrix->department_id = $request['department_id'];
-        $escalation_matrix->user_id = $request['user_id'];
-        $escalation_matrix->to_or_cc = $request['to_or_cc'];
-        $escalation_matrix->save();
+        $this->dataStore($escalation_matrix,$request);
 
         Alert::success('Success', 'Successfully Created');
 
@@ -68,38 +43,11 @@ class EscalationMatrixController extends Controller
         return view('escalation_matrix.edit', get_defined_vars());
     }
 
-    public function update(Request $request, $id)
+    public function update(EscalationMatrixFormValidation $request, $id)
     {
 
         $escalation_matrix = EscalationMatrix::findOrFail($id);
-
-        $input = Input::all();
-	    $rules = [
-	    	'department_id' => 'required',
-	    	'escalation_level_id' => 'required',
-	    	'user_id' => 'required',
-	    	'to_or_cc' => 'required',
-	    ];
-	    $messages = [
-            'department_id.required' => 'The Department is required',
-            'escalation_level_id.required' => 'The Escalation Level is required',
-            'user_id.required' => 'The assign to field is required',
-            'to_or_cc.required' => 'This field is required',
-        ];
-
-        $validator = Validator::make($input, $rules, $messages);
-        if($validator->fails()){
-            Alert::error('Error', 'Something wrong!');
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
-        }
-
-        $escalation_matrix->escalation_level_id = $request['escalation_level_id'];
-        $escalation_matrix->department_id = $request['department_id'];
-        $escalation_matrix->user_id = $request['user_id'];
-        $escalation_matrix->to_or_cc = $request['to_or_cc'];
-        $escalation_matrix->save();
+        $this->dataStore($escalation_matrix,$request);
 
         Alert::success('Success', 'Successfully Updated');
 
@@ -115,5 +63,15 @@ class EscalationMatrixController extends Controller
             Alert::error('Alert!!!', 'Sorry, something went wrong. You can not delete');
             return back();
         }
+    }
+
+    protected function dataStore($escalation_matrix,$request)
+    {
+        $escalation_matrix->escalation_level_id = $request['escalation_level_id'];
+        $escalation_matrix->department_id = $request['department_id'];
+        $escalation_matrix->user_id = $request['user_id'];
+        $escalation_matrix->to_or_cc = $request['to_or_cc'];
+        $escalation_matrix->save();
+
     }
 }

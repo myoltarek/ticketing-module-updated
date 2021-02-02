@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DistrictFormValidation;
 use Illuminate\Http\Request;
 use App\Models\District;
 use App\Models\Division;
@@ -40,30 +41,10 @@ class DistrictController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DistrictFormValidation $request)
     {
-        $input = Input::all();
-	    $rules = [
-            'name' => 'required',
-            'division_id' => 'required'
-	    ];
-	    $messages = [
-            'name.required' => 'The district field is required.',
-            'division_id.required' => 'The Division Field is required'
-        ];
-
-        $validator = Validator::make($input, $rules, $messages);
-        if($validator->fails()){
-            Alert::error('Error', 'Something wrong!');
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
-        }
-
         $district = new District;
-        $district->name = $request->name;
-        $district->division_id = $request->division_id;
-        $district->save();
+        $this->dataStore($district, $request);
 
         Alert::success('Success', 'Successfully Created');
 
@@ -99,32 +80,11 @@ class DistrictController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DistrictFormValidation $request, $id)
     {
         $district = District::find($id);
+        $this->dataStore($district, $request);
 
-        $input = Input::all();
-	    $rules = [
-            'name' => 'required',
-            'division_id' => 'required'
-	    ];
-	    $messages = [
-            'name.required' => 'The District field is required.',
-            'division_id.required' => 'The Division Field is required'
-        ];
-
-    	$validator = Validator::make($input, $rules, $messages);
-
-        if($validator->fails()){
-            Alert::error('Error', 'Something wrong!');
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
-        }
-
-        $district->name = $request->name;
-
-        $district->save();
         Alert::success('Success', 'Successfully updated');
         return redirect('district');
     }
@@ -144,5 +104,12 @@ class DistrictController extends Controller
             Alert::error('Alert!!!', 'Sorry, something went wrong. You can not delete');
             return back();
         }
+    }
+
+    protected function dataStore($district, $request)
+    {
+        $district->name = $request->name;
+        $district->division_id = $request->division_id;
+        $district->save();
     }
 }

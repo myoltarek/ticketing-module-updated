@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EscalationLevelFormValidation;
 use App\Models\EscalationLevel;
 use Validator;
 use Illuminate\Http\Request;
@@ -22,32 +23,10 @@ class EscalationLevelController extends Controller
         return view('escalation_levels.create');
     }
 
-    public function store(Request $request)
+    public function store(EscalationLevelFormValidation $request)
     {
-        // dd($request->all());
-
-        $input = Input::all();
-
-        $rules = [
-            'name' => 'required',
-        ];
-
-        $messages = [
-            'name.required' => 'Level name is required',
-        ];
-
-        $validator = Validator::make($input, $rules, $messages);
-        if($validator->fails()){
-            Alert::error('Error', 'Something wrong!');
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
-        }
-
         $escalation_level = new EscalationLevel;
-        $escalation_level->name = $request['name'];
-        $escalation_level->days = $request['days'];
-        $escalation_level->save();
+        $this->dataStore($escalation_level,$request);
 
         Alert::success('Success', 'Successfully Cretared');
 
@@ -62,31 +41,10 @@ class EscalationLevelController extends Controller
         return view('escalation_levels.edit', get_defined_vars());
     }
 
-    public function update(Request $request, $id)
+    public function update(EscalationLevelFormValidation $request, $id)
     {
         $escalation_level = EscalationLevel::findOrFail($id);
-
-        $input = Input::all();
-
-        $rules = [
-            'name' => 'required',
-        ];
-
-        $messages = [
-            'name.required' => 'Level name is required',
-        ];
-
-        $validator = Validator::make($input, $rules, $messages);
-        if($validator->fails()){
-            Alert::error('Error', 'Something wrong!');
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
-        }
-
-        $escalation_level->name = $request['name'];
-        $escalation_level->days = $request['days'];
-        $escalation_level->save();
+        $this->dataStore($escalation_level,$request);
 
         Alert::success('Success', 'Successfully Updated');
 
@@ -102,5 +60,12 @@ class EscalationLevelController extends Controller
             Alert::error('Alert!!!', 'Sorry, something went wrong. You can not delete');
             return back();
         }
+    }
+
+    protected function dataStore($escalation_level,$request)
+    {
+        $escalation_level->name = $request['name'];
+        $escalation_level->days = $request['days'];
+        $escalation_level->save();
     }
 }

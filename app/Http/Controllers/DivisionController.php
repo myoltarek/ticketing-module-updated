@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DivisionFormValidation;
 use Illuminate\Http\Request;
 use App\Models\Division;
 use Validator;
@@ -15,7 +16,7 @@ class DivisionController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -44,27 +45,10 @@ class DivisionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DivisionFormValidation $request)
     {
-        $input = Input::all();
-	    $rules = [
-	    	'name' => 'required',
-	    ];
-	    $messages = [
-            'name.required' => 'The division field is required.',
-        ];
-	    
-        $validator = Validator::make($input, $rules, $messages);
-        if($validator->fails()){
-            Alert::error('Error', 'Something wrong!');
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
-        }
-
         $division = new Division;
-        $division->name = $request->name;
-        $division->save();
+        $this->dataStore($division,$request);
 
         Alert::success('Success', 'Successfully Created');
 
@@ -102,30 +86,11 @@ class DivisionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DivisionFormValidation $request, $id)
     {
         $division = Division::find($id);
-        
-        $input = Input::all();
-	    $rules = [
-	    	'name' => 'required',
-	    ];
-	    $messages = [
-            'name.required' => 'The Division field is required.',
-        ];
-	    
-    	$validator = Validator::make($input, $rules, $messages);
+        $this->dataStore($division,$request);
 
-        if($validator->fails()){
-            Alert::error('Error', 'Something wrong!');
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
-        }
-
-        $division->name = $request->name;
-
-        $division->save();
         Alert::success('Success', 'Successfully updated');
         return redirect('division');
     }
@@ -141,10 +106,16 @@ class DivisionController extends Controller
         try {
             Division::find($id)->delete();
             return back()->with('success', 'Successfully Deleted!');
-          
+
           } catch (\Illuminate\Database\QueryException $e) {
             Alert::error('Alert!!!', 'Sorry, something went wrong. You can not delete');
             return back();
           }
+    }
+
+    protected function dataStore($division,$request)
+    {
+        $division->name = $request->name;
+        $division->save();
     }
 }

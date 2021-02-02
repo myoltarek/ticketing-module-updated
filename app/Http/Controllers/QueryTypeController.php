@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QueryTypeFormValidation;
 use Illuminate\Http\Request;
 use App\Models\QueryType;
 use Illuminate\Support\Facades\Input;
@@ -15,7 +16,7 @@ class QueryTypeController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -43,30 +44,10 @@ class QueryTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QueryTypeFormValidation $request)
     {
-        $input = Input::all();
-
-        $rules = [
-            'name' => 'required'
-        ];
-
-        $message = [
-            'name.required' => 'Query Name is required'
-        ];
-
-        $validator = Validator::make($input, $rules, $message);
-        if($validator->fails()){
-            Alert::error('Error', 'Something wrong!');
-
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
-        }
-
         $query_type = new QueryType;
-        $query_type->name = $request->name;
-        $query_type->save();
+        $this->dataStore($query_type,$request);
 
         Alert::success('Success', 'Successfully Created');
 
@@ -105,31 +86,10 @@ class QueryTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(QueryTypeFormValidation $request, $id)
     {
         $query_type = QueryType::find($id);
-
-        $input = Input::all();
-
-        $rules = [
-            'name' => 'required'
-        ];
-
-        $message = [
-            'name.required' => 'Query Name is required'
-        ];
-
-        $validator = Validator::make($input, $rules, $message);
-        if($validator->fails()){
-            Alert::error('Error', 'Something wrong!');
-
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
-        }
-
-        $query_type->name = $request->name;
-        $query_type->save();
+        $this->dataStore($query_type,$request);
 
         Alert::success('Success', 'Successfully Updated');
 
@@ -147,10 +107,16 @@ class QueryTypeController extends Controller
         try {
             QueryType::find($id)->delete();
             return back()->with('success', 'Successfully Deleted!');
-          
+
         } catch (\Illuminate\Database\QueryException $e) {
             Alert::error('Alert!!!', 'Sorry, something went wrong. You can not delete');
             return back();
         }
+    }
+
+    protected function dataStore($query_type,$request)
+    {
+        $query_type->name = $request->name;
+        $query_type->save();
     }
 }

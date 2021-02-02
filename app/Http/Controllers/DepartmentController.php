@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DepartmentFormValidation;
 use Illuminate\Http\Request;
 use App\Models\Department;
 use Validator;
@@ -42,27 +43,10 @@ class DepartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DepartmentFormValidation $request)
     {
-        $input = Input::all();
-	    $rules = [
-	    	'name' => 'required',
-	    ];
-	    $messages = [
-            'name.required' => 'Department name is required',
-        ];
-
-        $validator = Validator::make($input, $rules, $messages);
-        if($validator->fails()){
-            Alert::error('Error', 'Something wrong!');
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
-        }
-
         $department = new Department;
-        $department->name = $request->name;
-        $department->save();
+        $this->dataStore($department,$request);
 
         Alert::success('Success', 'Successfully Created');
 
@@ -78,30 +62,11 @@ class DepartmentController extends Controller
         return view('departments.edit', compact('department'));
     }
 
-    public function update(Request $request, $id)
+    public function update(DepartmentFormValidation $request, $id)
     {
         $department = Department::findOrFail($id);
+        $this->dataStore($department,$request);
 
-        $input = Input::all();
-	    $rules = [
-	    	'name' => 'required',
-	    ];
-	    $messages = [
-            'name.required' => 'Department name is required.',
-        ];
-
-    	$validator = Validator::make($input, $rules, $messages);
-
-        if($validator->fails()){
-            Alert::error('Error', 'Something wrong!');
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
-        }
-
-        $department->name = $request->name;
-
-        $department->save();
         Alert::success('Success', 'Successfully updated');
         return redirect('department');
     }
@@ -117,5 +82,11 @@ class DepartmentController extends Controller
             Alert::error('Alert!!!', 'Sorry, something went wrong. You can not delete');
             return back();
         }
+    }
+
+    protected function dataStore($department,$request)
+    {
+        $department->name = $request->name;
+        $department->save();
     }
 }
