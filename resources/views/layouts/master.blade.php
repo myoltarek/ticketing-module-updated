@@ -260,7 +260,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
             <ul class="nav nav-treeview sub-nav">
               <li class="nav-item">
-                <a href="{{ route('escalation-matrix.index') }}" class="nav-link {{ 'escalations' == \Request::segment(1) ? 'active' : '' }}">
+                <a href="{{ route('escalation-matrix.index') }}" class="nav-link {{ 'escalation-matrix' == \Request::segment(1) ? 'active' : '' }}">
                   <i style="color: #F7941D;" class="fas fa-sitemap nav-icon"></i>
                   <p>
                     Ticket Escallation
