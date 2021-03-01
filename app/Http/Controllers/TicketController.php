@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\TicketRepositoryInterface;
 use Auth;
 use Alert;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -25,8 +26,8 @@ class TicketController extends Controller
     public function index(Request $request)
     {
         $tickets = $this->ticketRepoisitory->all($request);
-
-        $status_for_display = $request->type;
+        $status_for_display = $request->ticket_type;
+        // dd($status_for_display);
         return view("tickets.index", get_defined_vars());
     }
 
@@ -44,8 +45,18 @@ class TicketController extends Controller
 
         Alert::success('Success', 'Ticket Status changed successfully');
 
-        return redirect()->route('ticket',['type'=> $ticket->status]);
+        return redirect()->route('ticket',['ticket_type'=> $ticket->status]);
     }
+
+    // public function sendToClose($id)
+    // {
+    //     $ticket = Ticket::findOrFail($id);
+
+    //     $ticket->status = "CLOSED";
+    //     $ticket->save();
+
+    //     return redirect()->route('ticket',['ticket_type' => $ticket->status]);
+    // }
 
 
     public function downloadPanel()
@@ -60,4 +71,6 @@ class TicketController extends Controller
 
         return Excel::download($export, 'tickets.xlsx');
     }
+
+
 }

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DivisionFormValidation;
-use Illuminate\Http\Request;
-use App\Models\Division;
 use Validator;
-Use Alert;
+use App\Models\Division;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+Use Alert;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\DivisionFormValidation;
 
 class DivisionController extends Controller
 {

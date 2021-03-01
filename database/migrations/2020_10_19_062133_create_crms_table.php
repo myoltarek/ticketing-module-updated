@@ -20,7 +20,6 @@ class CreateCrmsTable extends Migration
             $table->string('customer_contact');
             $table->integer('district_id')->unsigned()->nullable();
             $table->string('address')->nullable();
-            $table->string('profession')->nullable();
             $table->integer('query_type_id')->unsigned()->nullable();
             $table->integer('department_id')->unsigned()->nullable();
             $table->integer('complain_type_id')->unsigned()->nullable();

@@ -50,7 +50,7 @@
                                         <td>{{ Illuminate\Support\Str::limit($ticket->crm->verbatim, 30) }}</td>
                                         <td>
                                             <form action="{{ route('ticket.show', $ticket->id) }}" method="get" style ='float: left; padding: 5px;'>
-                                                <button type="submit" class="btn btn-info"><i class="fas fa-eye"></i></button> 
+                                                <button type="submit" class="btn btn-info"><i class="fas fa-eye"></i></button>
                                             </form>
                                         </td>
                                     </tr>

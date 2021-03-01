@@ -268,6 +268,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
             </ul>
+            <ul class="nav nav-treeview sub-nav">
+              <li class="nav-item">
+                <a href="{{ route('common-mail-cc.index') }}" class="nav-link {{ 'common-mail-cc' == \Request::segment(1) ? 'active' : '' }}">
+                  <i style="color: #c2b47a;" class="fab fa-creative-commons nav-icon"></i>
+                  <p>
+                    Common Mail CC
+                  </p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           @php

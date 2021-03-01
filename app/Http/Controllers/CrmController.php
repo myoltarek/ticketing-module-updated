@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 Use Alert;
 use App\Jobs\SendTicketEmail;
 use App\Models\AssignTicket;
+use App\Models\CommonMailCc;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
@@ -58,8 +59,8 @@ class CrmController extends Controller
         $phoneNumber = $phone_number;
         $agent = $request->agent;
 
-        $crmLast = Crm::whereIn('customer_contact', [substr($request->phone_number, -11), substr($request->phone_number, -10)])->orderBy('id', 'desc')->first();
-
+        $crmLast = Crm::with('district','district.division','query_type','complain_type','department','call_remark')->whereIn('customer_contact', [substr($request->phone_number, -11), substr($request->phone_number, -10)])->orderBy('id', 'desc')->first();
+        // dd($crmLast);
         return view('crms.create', compact('districts','departments', 'phoneNumber', 'agent', 'crmLast', 'query_types', 'complain_types', 'call_remarks'));
     }
 
@@ -71,14 +72,20 @@ class CrmController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         if($request->raiseTicket == 'yes')
         {
+            $common_email_cc_array = array();
             $escalation = AssignTicket::where('department_id', $request->department_id)->with('user')->first();
+            $common_mail_ccs = CommonMailCc::select('email')->get()->toarray();
+            array_push($common_email_cc_array,$escalation->mail_cc);
+            foreach($common_mail_ccs as $common_mail_cc){
+                array_push($common_email_cc_array, $common_mail_cc['email']);
+            }
             $crm = $this->storeCrmData($request);
             $ticket = $this->storeTicketData($crm,$escalation);
 
-            $this->sendMailToAssignPerson($ticket,$escalation);
+            $this->sendMailToAssignPerson($ticket,$escalation,$common_email_cc_array);
 
             return redirect()->back()->with('success','CRM & Ticket saved successfully!');
         }else {
@@ -113,15 +120,29 @@ class CrmController extends Controller
         $crm->customer_contact = $request->customer_contact;
         $crm->agent_name = $request->agent_name;
         $crm->customer_name = $request->customer_name;
+        $crm->customer_gender = $request->customer_gender;
+        $crm->alternate_number = $request->alternate_number;
+        $crm->wing_name = $request->wing_name;
+        $crm->dealer_division = $request->dealer_division;
+        $crm->area = $request->area;
+        $crm->territory = $request->territory;
+        $crm->region = $request->region;
+        $crm->designation = $request->designation;
+        $crm->distributor_name = $request->distributor_name;
+        $crm->proprietor_name = $request->proprietor_name;
+        $crm->verification_code = $request->verification_code;
+        $crm->caller_type = $request->caller_type;
         $crm->district_id = $request->district_id;
         $crm->address = $request->address;
-        $crm->profession = $request->profession;
         $crm->query_type_id = $request->query_type_id;
         $crm->department_id = $request->department_id;
         $crm->complain_type_id = $request->complain_type_id;
+        $crm->call_type = $request->call_type;
         $crm->call_remark_id = $request->call_remark_id;
-        $crm->verbatim = $request->verbatim;
+        $crm->verbatim = $request->conversation_details;
         $crm->save();
+
+        return $crm;
     }
 
     public function storeTicketData($crm,$escalation)
@@ -131,9 +152,11 @@ class CrmController extends Controller
         $ticket->user_id = $escalation->user_id;
         $ticket->status = 'NEW';
         $ticket->save();
+
+        return $ticket;
     }
 
-    public function sendMailToAssignPerson($ticket,$escalation)
+    public function sendMailToAssignPerson($ticket,$escalation,$common_mail_cc_array)
     {
         $ticket_details = $this->crmRepository->getTicketDetails($ticket);
 //        $ticket_details = Ticket::where('id', $ticket->id)->with(['crm','crm.district','crm.district.division','crm.department','crm.query_type','crm.complain_type','crm.call_remark'])->first();
@@ -150,7 +173,7 @@ class CrmController extends Controller
             'customer_division' => $ticket_details->crm->district->division->name,
             'customer_district' => $ticket_details->crm->district->name,
             'customer_address' => $ticket_details->crm->address,
-            'customer_profession' => $ticket_details->crm->profession,
+            'call_type' => $ticket_details->crm->call_type,
             'department' => $ticket_details->crm->department->name,
             'query_type' => $ticket_details->crm->query_type->name,
             'complain_type' => $ticket_details->crm->complain_type->name,
@@ -162,7 +185,7 @@ class CrmController extends Controller
         // end of cc for supervisor
         Mail::to($escalation->user)
             // ->cc([$escalation->mail_cc,$super_CC])
-            ->cc($escalation->mail_cc)
+            ->cc($common_mail_cc_array)
             ->send(new NewTicketMail($data));
         // SendTicketEmail::dispatch($escalation->user, $data);
     }

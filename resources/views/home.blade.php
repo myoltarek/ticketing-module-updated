@@ -131,7 +131,6 @@ var areaCharts = {
     } );
 
         request.done( function ( response ) {
-            console.log( response );
             areaCharts.createCompletedJobsChart( response );
         });
     },
@@ -279,7 +278,6 @@ var lineCharts = {
     } );
 
         request.done( function ( response ) {
-            console.log( response );
             lineCharts.createCompletedJobsChart( response );
         });
     },

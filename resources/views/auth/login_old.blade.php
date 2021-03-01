@@ -22,75 +22,50 @@
 <link href="{{ asset('css/css-hamburgers/hamburgers.min.css') }}" rel="stylesheet">
 <style>
 
-* {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-}
+    * {
+        margin: 0px; 
+        padding: 0px; 
+        box-sizing: border-box;
+    }
 
-body, html {
-    height: 100%;
-    /* font-family: Poppins-Regular, sans-serif; */
-}
-.container-login100 {
-    min-height: 100vh;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    background: #9053c7;
-    background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
-    background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
-    background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
-    background: linear-gradient(-135deg, #c850c0, #4158d0);
-}
-.wrap-login100 {
-    width: 960px;
-    background: #fff;
-    background: linear-gradient(to right bottom, rgba(255,255,255,0.7), rgba(255,255,255,0.3));
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-    backdrop-filter: blur(2rem);
-    -webkit-backdrop-filter: blur(2rem);
-    border-radius: 10px;
-    overflow: hidden;
+    body, html {
+        height: 100%;
+        /* font-family: Poppins-Regular, sans-serif; */
+    }
+    .container-login100 { 
+        min-height: 100vh;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        background: #9053c7;
+        background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
+        background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
+        background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
+        background: linear-gradient(-135deg, #c850c0, #4158d0);
+    }
+    .wrap-login100 {
+        width: 960px;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
 
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 177px 130px 33px 95px;
-    z-index: 2
-}
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 177px 130px 33px 95px;
+    }
 
-.circle1,
-.circle2{
-    background: white;
-    background: linear-gradient(to right bottom, rgba(255,255,255,0.8), rgba(255,255,255,0.3));
-    height: 15rem;
-    width: 15rem;
-    position: absolute;
-    border-radius: 50%;
-}
-
-.circle1{
-    top: 10%;
-    right: 20%;
-}
-
-.circle2{
-    bottom: 10%;
-    left: 20%;
-}
-
-.login100-pic {
+    .login100-pic {
   width: 316px;
 }
 
@@ -103,7 +78,7 @@ body, html {
 
 .login100-form-title {
   font-family: Poppins-Bold;
-  font-size: 34px;
+  font-size: 24px;
   color: #333333;
   line-height: 1.2;
   text-align: center;
@@ -124,12 +99,11 @@ body, html {
   font-family: Poppins-Medium;
   font-size: 15px;
   line-height: 1.5;
-  color: #333333;
-  border: none;
+  color: #666666;
+
   display: block;
   width: 100%;
-  /* background: #e6e6e6; */
-  background: linear-gradient(to right bottom, rgba(255,255,255,0.7), rgba(255,255,255,0.3));
+  background: #e6e6e6;
   height: 50px;
   border-radius: 25px;
   padding: 0 30px 0 68px;
@@ -148,13 +122,7 @@ body, html {
   width: 100%;
   height: 100%;
   box-shadow: 0px 0px 0px 0px;
-  /* color: rgba(87,184,70, 0.8); */
-  color: #4158d0;
-}
-
-.input100:focus{
-  outline: none;      /* Remove default outline and use border or box-shadow */
-  box-shadow: 0 0 0 2px #4158d0;
+  color: rgba(87,184,70, 0.8);
 }
 
 .input100:focus + .focus-input100 {
@@ -193,7 +161,7 @@ body, html {
   height: 100%;
   padding-left: 35px;
   pointer-events: none;
-  color: #333333;
+  color: #666666;
 
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -202,7 +170,7 @@ body, html {
 }
 
 .input100:focus + .focus-input100 + .symbol-input100 {
-  color: #4158d0;
+  color: #57b846;
   padding-left: 28px;
 }
 
@@ -222,18 +190,15 @@ body, html {
 
 .login100-form-btn {
   font-family: Montserrat-Bold;
-  font-size: 15 px;
-  /* font-weight: 600; */
+  font-size: 15px;
   line-height: 1.5;
   color: #fff;
-  background: linear-gradient(to right top,#4158d0, #c850c0);
   text-transform: uppercase;
-  border: none;
+
   width: 100%;
   height: 50px;
-  border: none;
   border-radius: 25px;
-  /* background: #57b846; */
+  background: #57b846;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -249,18 +214,9 @@ body, html {
   transition: all 0.4s;
 }
 
-.login100-form-btn:focus{
-  outline: none;
-}
-
 .login100-form-btn:hover {
   background: #333333;
-  box-shadow: 0 0 0 2px #4158d0;
-  /* background: linear-gradient(to right bottom, rgba(255,255,255,0.3), rgba(255,255,255,0.5)); */
-  /* color: #333333; */
-
 }
-
 
 @media (max-width: 992px) {
   .wrap-login100 {
@@ -274,11 +230,6 @@ body, html {
   .login100-form {
     width: 50%;
   }
-  .circle1,
-  .circle2{
-    display: none;
-  }
-
 }
 
 @media (max-width: 768px) {
@@ -380,7 +331,7 @@ body, html {
 					</span>
 
 					<div class="wrap-input100 validate-input">
-						<input class="input100 {{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" name="email" placeholder="Email" required>
+						<input class="input100 {{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" name="email" placeholder="Email">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="far fa-envelope" aria-hidden="true"></i>
@@ -405,7 +356,7 @@ body, html {
                             </span>
                         @endif
                     </div>
-
+                    
                     <div class="form-group row">
                         <div class="col-md-6 offset-md-4">
                             <div class="form-check">
@@ -417,7 +368,7 @@ body, html {
                             </div>
                         </div>
                     </div>
-
+					
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
                         {{ __('Login') }}
@@ -429,17 +380,17 @@ body, html {
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{ __('Login') }}</div>
-
+    
                     <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
-
+    
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
+    
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-
+    
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('email') }}</strong>
@@ -447,13 +398,13 @@ body, html {
                                     @endif
                                 </div>
                             </div>
-
+    
                             <div class="form-group row">
                                 <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
+    
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
+    
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('password') }}</strong>
@@ -461,25 +412,25 @@ body, html {
                                     @endif
                                 </div>
                             </div>
-
+    
                             <div class="form-group row">
                                 <div class="col-md-6 offset-md-4">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
+    
                                         <label class="form-check-label" for="remember">
                                             {{ __('Remember Me') }}
                                         </label>
                                     </div>
                                 </div>
                             </div>
-
+    
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Login') }}
                                     </button>
-
+    
                                     @if (Route::has('password.request'))
                                         <a class="btn btn-link" href="{{ route('password.request') }}">
                                             {{ __('Forgot Your Password?') }}
@@ -493,11 +444,10 @@ body, html {
             </div>
         </div> -->
     </div>
-    <div class="circle1"></div>
-    <div class="circle2"></div>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="{{ asset('/js/popper.js') }}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+    
 </body>
 </html>
+

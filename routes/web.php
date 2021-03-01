@@ -28,6 +28,7 @@ Route::get('/ticket/show/{id}','TicketController@show')->where('id', '[0-9]+')->
 Route::post('/ticket/{id}','TicketController@changeStatus')->where('id', '[0-9]+');
 Route::get('/ticket/downloadPanel','TicketController@downloadPanel')->name('ticket.downloadPanel');
 Route::post('/ticket/download','TicketController@download');
+Route::post('/ticket/send-to-close/{id}','TicketController@sendToClose');
 
 Route::get('/crm', 'CrmController@index')->name('crm');
 Route::get('/crm/downloadPanel','CrmController@downloadPanel')->name('crm.downloadPanel');
@@ -46,4 +47,5 @@ Route::group(['middleware' => 'isAdmin'], function () {
     Route::resource('/escalations', 'EscalationController');
     Route::resource('/escalation-levels', 'EscalationLevelController');
     Route::resource('/escalation-matrix', 'EscalationMatrixController');
+    Route::resource('/common-mail-cc', 'CommonMailCcController');
 });

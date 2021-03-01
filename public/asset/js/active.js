@@ -10,3 +10,4 @@
 	}, 500); //Here you can change preloader time
 
 })(jQuery);
+

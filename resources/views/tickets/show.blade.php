@@ -46,15 +46,15 @@
                                                             <p>
                                                                 <b>
                                                                     CRM Id:
-                                                                </b> 
+                                                                </b>
                                                                 {{ $ticket->crm_id }}
                                                             </p>
                                                         </div>
                                                         <div class="col">
-                                                            <p> 
+                                                            <p>
                                                                 <b>
                                                                     Name:
-                                                                </b> 
+                                                                </b>
                                                                 {{ $ticket->crm->customer_name }}
                                                             </p>
                                                         </div>
@@ -62,18 +62,18 @@
                                                     <hr/>
                                                     <div class="row">
                                                         <div class="col">
-                                                            <p> 
+                                                            <p>
                                                                 <b>
                                                                     Phone No:
-                                                                </b> 
+                                                                </b>
                                                                 {{ $ticket->crm->customer_contact }}
                                                             </p>
                                                         </div>
                                                         <div class="col">
-                                                            <p> 
+                                                            <p>
                                                                 <b>
                                                                     Division:
-                                                                </b> 
+                                                                </b>
                                                                 {{ $ticket->crm->district->division->name }}
                                                             </p>
                                                         </div>
@@ -81,31 +81,20 @@
                                                     <hr/>
                                                     <div class="row">
                                                         <div class="col">
-                                                            <p> 
+                                                            <p>
                                                                 <b>
                                                                     District:
-                                                                </b> 
+                                                                </b>
                                                                 {{ $ticket->crm->district->name }}
                                                             </p>
                                                         </div>
                                                         <div class="col">
-                                                            <p> 
+                                                            <p>
                                                                 <b>
                                                                     Address:
-                                                                </b> 
+                                                                </b>
                                                                 {{ $ticket->crm->address }}
                                                             </p>
-                                                        </div>
-                                                    </div>
-                                                    <hr/>
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <p> 
-                                                                <b>
-                                                                    Profession:
-                                                                </b> 
-                                                                {{ $ticket->crm->profession }}
-                                                            </p>                                                        
                                                         </div>
                                                     </div>
                                                 </div>
@@ -169,12 +158,39 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <?php if($ticket->comment != null){?>
-                                            <label>Current Comment</label>
-                                            <p style="border: 1px solid #9F13D4; padding: 10px; border-radius:10px;">{{ $ticket->comment }}</p>
+                                    <?php if(!empty($ticket->ticket_response)){?>
+                                        <label>Comments <i class="fas fa-comment-alt ml-1"></i></label>
+                                        @foreach ($ticket->ticket_response as $response)
+                                        <div class="container-fluid mt-1">
+                                            <div class="row">
+                                                <div class="col-sm-1">
+                                                    <div class="user_avatar">
+                                                        <img src="{{ asset('/img/profile.png') }}" class="" alt="User Image">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-11">
+                                                    <div class="comment_body">
+                                                        <p>{{ $response->response }}</p>
+                                                    </div>
+
+                                                    <!-- comments toolbar -->
+                                                    <div class="comment_toolbar">
+                                                        <!-- inc. date and time -->
+                                                        <div class="comment_details">
+                                                            <ul>
+                                                                <li><i class="fa fa-clock mr-1"></i>{{ \Carbon\Carbon::parse($response->created_at)->toTimeString() }}</li>
+                                                                <li><i class="fa fa-calendar mr-1"></i>{{ \Carbon\Carbon::parse($response->created_at)->format('d/m/Y') }}</li>
+                                                                <li><i class="fa fa-pencil"></i> <span class="user">{{ $response->user->name }}</span></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
                                     <?php } ?>
-                                    {!! Form::open(['url' => "ticket/$ticket->id", 'method' => 'post', 'class' => 'form-horizontal']) !!}
-                                        <?php if( $ticket->status != 'CLOSED'){ ?>
+                                    <?php if( $ticket->status != 'CLOSED'){ ?>
+                                        {!! Form::open(['url' => "ticket/$ticket->id", 'method' => 'post', 'class' => 'form-horizontal']) !!}
                                             <div class="form-group {{ $errors->has('comment') ? 'has-error' : ''}}">
                                                 {!! Form::label('comment', 'Add Comment')!!}
                                                 {!! Form::text('comment', null, ['class' => 'form-control','placeholder' => 'Enter Comment', 'autocomplete' => 'off']) !!}
@@ -182,10 +198,12 @@
                                                     {{ $errors->first('comment') }}
                                                 </span>
                                             </div>
-                                            {!! Form::Submit('Send to next step', ['class' => 'btn btn-primary pull-right']) !!}
-                                        <?php } ?>
-                                    {!! Form::close() !!}
+                                            {!! Form::Submit('Send to next step', ['class' => 'btn btn-primary float-left', 'name'=>'action']) !!}
+                                            {!! Form::Submit('Send to close', ['class' => 'btn btn-danger float-right', 'name'=>'action']) !!}
+                                        {!! Form::close() !!}
+                                    <?php } ?>
                                 </div>
+
                             </div>
                         </div>
                     </div>

@@ -18,7 +18,6 @@ class CreateTicketsTable extends Migration
             $table->integer('crm_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->enum('status', array('NEW','WIP','ANSWERED','CLOSED'))->default('NEW');
-            $table->text('comment')->nullable();
             $table->timestamps();
         });
 
