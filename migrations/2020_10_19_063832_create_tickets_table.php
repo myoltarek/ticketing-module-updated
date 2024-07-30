@@ -13,24 +13,28 @@ class CreateTicketsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tickets', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedBigInteger('user_id');
-            $table->string('ticket_id')->nullable();
-            $table->string('name')->nullable();
-            $table->string('email')->nullable();
-            $table->string('subject')->nullable();
-            $table->string('department')->nullable();
-            $table->string('priority')->nullable();
-            $table->longText('description')->nullable();
-            $table->string('attachment')->nullable();
-            $table->string('status')->default('1');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('tickets')) {
+            Schema::create('tickets', function (Blueprint $table) {
+                $table->increments('id');
+                $table->unsignedBigInteger('user_id');
+                $table->string('ticket_id')->nullable();
+                $table->string('name')->nullable();
+                $table->string('email')->nullable();
+                $table->string('subject')->nullable();
+                $table->string('department')->nullable();
+                $table->string('priority')->nullable();
+                $table->longText('description')->nullable();
+                $table->string('attachment')->nullable();
+                $table->string('status')->default('1');
+                $table->timestamps();
+            });
+        }
 
         Schema::table('tickets', function(Blueprint $table) {
-            $table->foreign('user_id')->references('user_id')->on('users');
+            //$table->foreign('user_id')->references('user_id')->on('users');
         });
+
+        
     }
 
     /**
